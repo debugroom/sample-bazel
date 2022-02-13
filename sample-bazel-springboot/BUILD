@@ -24,3 +24,14 @@ springboot(
     boot_app_class = "org.debugroom.sample.bazel.springboot.config.App",
     java_library = ":sample_bazel_springboot_lib",
 )
+
+load("@io_bazel_rules_docker//container:image.bzl", "container_image")
+
+
+container_image(
+    name = "sample_bazel_springboot_img",
+    # References container_pull from WORKSPACE (above)
+    base = "@java_base//image",
+    files = ["//:sample_bazel_springboot.jar"],
+    cmd = ["sample_bazel_springboot.jar"]
+)
